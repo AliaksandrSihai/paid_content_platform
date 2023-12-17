@@ -16,6 +16,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='email', **NULLABLE)
     city = models.CharField(max_length=135, verbose_name='city', **NULLABLE)
     avatar = models.ImageField(upload_to='users/', verbose_name='avatar', **NULLABLE)
+    is_paid_subscribe = models.BooleanField(default=False, verbose_name=' paid subscription ')
 
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = []
