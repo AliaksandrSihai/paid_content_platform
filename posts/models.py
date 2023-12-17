@@ -12,6 +12,7 @@ class PostModel(models.Model):
                                    related_name='post_owner', verbose_name='post_owner')
     is_free = models.BooleanField(default=False, verbose_name="post's status")
     image = models.ImageField(upload_to='posts/', verbose_name='avatar', **NULLABLE)
+    publish_date = models.DateField(auto_now_add=True, verbose_name='published date')
 
     def __str__(self):
         return self.title

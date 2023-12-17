@@ -18,7 +18,7 @@ class User(AbstractUser):
     city = models.CharField(max_length=135, verbose_name='city', **NULLABLE)
     avatar = models.ImageField(upload_to='users/', verbose_name='avatar', **NULLABLE)
     subscription = models.ForeignKey(to=Subscription, on_delete=models.DO_NOTHING, **NULLABLE,
-                                     related_name='subscription', verbose_name='subscription')
+                                     related_name='subscribe', verbose_name='subscription')
     is_paid_subscribe = models.BooleanField(default=False, verbose_name=' paid subscription ')
 
     USERNAME_FIELD = "phone"
