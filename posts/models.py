@@ -10,9 +10,10 @@ class PostModel(models.Model):
     description = models.TextField(verbose_name='description', **NULLABLE)
     post_owner = models.ForeignKey(to=users.models.User, on_delete=models.CASCADE,
                                    related_name='post_owner', verbose_name='post_owner')
-    is_free = models.BooleanField(default=False, verbose_name="post's status")
-    image = models.ImageField(upload_to='posts/', verbose_name='avatar', **NULLABLE)
+    is_free = models.BooleanField(default=False, verbose_name="is free?")
+    image = models.ImageField(upload_to='posts/', verbose_name='image', **NULLABLE)
     publish_date = models.DateField(auto_now_add=True, verbose_name='published date')
+    likes = models.ManyToManyField(to=users.models.User, related_name='likes', default=0)
 
     def __str__(self):
         return self.title
