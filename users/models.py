@@ -9,7 +9,7 @@ NULLABLE = {'null': True, 'blank': True}
 class User(AbstractUser):
     """User's model"""
 
-    number_validator = RegexValidator(regex=[r'^\+\d{9,15}$'],
+    number_validator = RegexValidator(regex=r'^\+\d{9,15}$',
                                       message='Phone number should start from "+" and consists of 9-15 digits')
 
     username = None

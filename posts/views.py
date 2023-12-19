@@ -13,14 +13,16 @@ class PostListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            context['object_list'] = PostModel.objects.prefetch_related('post_owner', 'likes').all()
+            #context['object_list'] = PostModel.objects.prefetch_related('post_owner', 'likes').all()
+            context['object_list'] = PostModel.objects.all()
         else:
-            context['object_list'] = PostModel.objects.filter(is_free=True).prefetch_related('post_owner', 'likes').all()
+           # context['object_list'] = PostModel.objects.filter(is_free=True).prefetch_related('post_owner', 'likes').all()
+            context['object_list'] = PostModel.objects.filter(is_free=True).all()
         return context
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
-    """Create post"""
+    """Create a post"""
     model = PostModel
     form_class = PostModelForm
     success_url = reverse_lazy('posts:all_posts')
@@ -32,13 +34,16 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class PostDetailView(LoginRequiredMixin, generic.DetailView):
+class PostDetailView(generic.DetailView):
     """Getting selected post"""
     model = PostModel
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = PostModel.objects.filter(pk=self.object.pk)
+        if self.request.user.is_authenticated:
+            context['object_list'] = PostModel.objects.filter(pk=self.object.pk)
+        else:
+            context['object_list'] = PostModel.objects.filter(pk=self.object.pk, is_free=True)
 
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
