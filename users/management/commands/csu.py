@@ -8,11 +8,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         user = User.objects.create(
-            phone='+1234567890',
-            first_name='Admin',
-            last_name='Admin',
+            phone="+1234567890",
+            first_name="Admin",
+            last_name="Admin",
             is_staff=True,
             is_superuser=True,
         )
-        user.set_password('123qwe456asd')
+        user.set_password("123qwe456asd")
         user.save()
