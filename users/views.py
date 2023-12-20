@@ -1,16 +1,13 @@
 import secrets
 import string
-
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.shortcuts import redirect
-from payments.models import PaymentModel
 from users.models import User
 from users.forms import UserForm, ProfileForm
 from django.urls import reverse_lazy, reverse
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
-from payments.services import create_payment
 
 
 class UserRegisterView(generic.CreateView):
@@ -22,10 +19,11 @@ class UserRegisterView(generic.CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        stripe_id = create_payment(user.subscription.price)
-        PaymentModel.objects.create(
-            user=self.request.user,
-            stripe_id=stripe_id
+        send_mail(
+            subject='Successful registration',
+            message='Hello, congratulations on your successful registration',
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[user.email],
         )
         return super().form_valid(form)
 

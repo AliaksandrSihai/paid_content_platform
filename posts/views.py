@@ -12,7 +12,7 @@ class PostListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.request.user.is_paid_subscribe:
             #context['object_list'] = PostModel.objects.prefetch_related('post_owner', 'likes').all()
             context['object_list'] = PostModel.objects.all()
         else:
