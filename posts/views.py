@@ -12,10 +12,22 @@ class PostListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # context["object_list"] = PostModel.objects.all()
         if self.request.user.is_authenticated and self.request.user.is_paid_subscribe:
             context["object_list"] = PostModel.objects.all()
         else:
             context["object_list"] = PostModel.objects.filter(is_free=True).all()
+        return context
+
+
+class MyPost(LoginRequiredMixin, generic.ListView):
+    """List of all posts"""
+
+    model = PostModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["object_list"] = PostModel.objects.filter(post_owner=self.request.user).all()
         return context
 
 
@@ -28,7 +40,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        self.object.author = self.request.user
+        self.object.post_owner = self.request.user
         self.object.save()
         return super().form_valid(form)
 

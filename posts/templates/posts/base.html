@@ -128,7 +128,7 @@
     <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 8.5rem;">
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
             <li>
-              <a href="{% url 'users:profile' %}" class="nav-link py-3 " title=" User: {{ user }}" data-bs-toggle="tooltip" data-bs-placement="right" style="border: none; background: none;">
+              <a href="{% url 'users:profile' %}" class="nav-link py-3 " title=" My Profile: {{ user }}" data-bs-toggle="tooltip" data-bs-placement="right" style="border: none; background: none;">
                 <svg class="bi pe-none" width="30" height="30" role="img" aria-label="Profile"><use xlink:href="#people-circle"/></svg>
               </a>
         </li>
@@ -145,7 +145,7 @@
             </li>
           {% endif %}
         <li>
-          <a href="#" class="nav-link py-3 " title="My posts" data-bs-toggle="tooltip" data-bs-placement="right" style="border: none; background: none;">
+          <a href="{% url 'posts:my_posts' %}" class="nav-link py-3 " title="My posts" data-bs-toggle="tooltip" data-bs-placement="right" style="border: none; background: none;">
             <svg class="bi pe-none" width="30" height="30" role="img" aria-label="Products"><use xlink:href="#grid"/></svg>
           </a>
         </li>
