@@ -5,8 +5,8 @@ from posts import views
 app_name = PostsConfig.name
 
 urlpatterns = [
-    path('', views.PostListView.as_view(), name='all_posts'),
-    path('add_post/', views.PostCreateView.as_view(), name='add_post'),
-    path('post/<int:pk>', views.PostDetailView.as_view(), name='post'),
-    path('delete_post/<int:pk>', views.PostDeleteView.as_view(), name='delete_post'),
+    path("", views.PostListView.as_view(), name="all_posts"),
+    path("add_post/", views.PostCreateView.as_view(), name="add_post"),
+    path("post/<int:pk>", views.PostDetailView.as_view(), name="post"),
+    path("delete_post/<int:pk>", views.PostDeleteView.as_view(), name="delete_post"),
 ]

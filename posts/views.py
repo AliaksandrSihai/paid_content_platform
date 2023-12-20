@@ -13,19 +13,18 @@ class PostListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated and self.request.user.is_paid_subscribe:
-            #context['object_list'] = PostModel.objects.prefetch_related('post_owner', 'likes').all()
-            context['object_list'] = PostModel.objects.all()
+            context["object_list"] = PostModel.objects.all()
         else:
-           # context['object_list'] = PostModel.objects.filter(is_free=True).prefetch_related('post_owner', 'likes').all()
-            context['object_list'] = PostModel.objects.filter(is_free=True).all()
+            context["object_list"] = PostModel.objects.filter(is_free=True).all()
         return context
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     """Create a post"""
+
     model = PostModel
     form_class = PostModelForm
-    success_url = reverse_lazy('posts:all_posts')
+    success_url = reverse_lazy("posts:all_posts")
 
     def form_valid(self, form):
         self.object = form.save()
@@ -36,22 +35,24 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
 class PostDetailView(generic.DetailView):
     """Getting selected post"""
+
     model = PostModel
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            context['object_list'] = PostModel.objects.filter(pk=self.object.pk)
+            context["object_list"] = PostModel.objects.filter(pk=self.object.pk)
         else:
-            context['object_list'] = PostModel.objects.filter(pk=self.object.pk, is_free=True)
+            context["object_list"] = PostModel.objects.filter(
+                pk=self.object.pk, is_free=True
+            )
 
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     """Delete selected post"""
 
     model = PostModel
-    success_url = reverse_lazy('posts:all_posts')
-
+    success_url = reverse_lazy("posts:all_posts")
 
 
 # class LikeView(generic.View):
