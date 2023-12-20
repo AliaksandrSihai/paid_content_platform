@@ -5,26 +5,57 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('subscription', '0001_initial'),
+        ("subscription", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PaymentModel',
+            name="PaymentModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('payment_date', models.DateTimeField(auto_now_add=True, verbose_name='date of payment')),
-                ('stripe_id', models.CharField(blank=True, max_length=40, null=True, verbose_name='payment id on stripe')),
-                ('payment_status', models.BooleanField(default=False, verbose_name="payment's status")),
-                ('subscription', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='subscription', to='subscription.subscription', verbose_name='subscription')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "payment_date",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="date of payment"
+                    ),
+                ),
+                (
+                    "stripe_id",
+                    models.CharField(
+                        blank=True,
+                        max_length=40,
+                        null=True,
+                        verbose_name="payment id on stripe",
+                    ),
+                ),
+                (
+                    "payment_status",
+                    models.BooleanField(default=False, verbose_name="payment's status"),
+                ),
+                (
+                    "subscription",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        related_name="subscription",
+                        to="subscription.subscription",
+                        verbose_name="subscription",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'payment',
-                'verbose_name_plural': 'payments',
+                "verbose_name": "payment",
+                "verbose_name_plural": "payments",
             },
         ),
     ]

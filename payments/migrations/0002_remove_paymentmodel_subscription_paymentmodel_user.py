@@ -6,21 +6,26 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('payments', '0001_initial'),
+        ("payments", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='paymentmodel',
-            name='subscription',
+            model_name="paymentmodel",
+            name="subscription",
         ),
         migrations.AddField(
-            model_name='paymentmodel',
-            name='user',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, related_name='user_payment', to=settings.AUTH_USER_MODEL, verbose_name='user_payment'),
+            model_name="paymentmodel",
+            name="user",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                related_name="user_payment",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="user_payment",
+            ),
             preserve_default=False,
         ),
     ]
