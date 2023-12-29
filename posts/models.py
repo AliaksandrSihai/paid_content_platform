@@ -14,9 +14,9 @@ class PostModel(models.Model):
     is_free = models.BooleanField(default=False, verbose_name="is free?")
     image = models.ImageField(upload_to="posts/", verbose_name="image", **NULLABLE)
     publish_date = models.DateField(auto_now_add=True, verbose_name="published date")
-    likes = models.ManyToManyField(
-        to=users.models.User, related_name="likes", default=0
-    )
+    # likes = models.ManyToManyField(
+    #     to=users.models.User, related_name="likes", default=0
+    # )
 
     def __str__(self):
         return self.title

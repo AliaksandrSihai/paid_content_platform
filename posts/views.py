@@ -12,7 +12,6 @@ class PostListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context["object_list"] = PostModel.objects.all()
         if self.request.user.is_authenticated and self.request.user.is_paid_subscribe:
             context["object_list"] = PostModel.objects.all()
         else:
@@ -58,6 +57,7 @@ class PostDetailView(generic.DetailView):
             context["object_list"] = PostModel.objects.filter(
                 pk=self.object.pk, is_free=True
             )
+        return context
 
 
 class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
