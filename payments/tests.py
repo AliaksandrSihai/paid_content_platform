@@ -1,6 +1,5 @@
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase
 from django.urls import reverse
-
 from payments.models import PaymentModel
 from subscription.models import Subscription
 from users.models import User
@@ -9,7 +8,6 @@ from rest_framework import status
 
 class ConfirmPaymentTest(TestCase):
     def setUp(self) -> None:
-        self.client = Client()
         self.subscription = Subscription.objects.create(
             title='test',
             price=10,
