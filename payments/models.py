@@ -1,5 +1,4 @@
 from django.db import models
-
 import users.models
 from users.models import NULLABLE
 

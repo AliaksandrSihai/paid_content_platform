@@ -21,7 +21,7 @@ def create_payment(amount):
 def confirm_payment(stripe_id, receipt_email):
     """ConfirmPaymentIntent"""
     try:
-        confirmation = stripe.PaymentIntent.confirm(
+        stripe.PaymentIntent.confirm(
             stripe_id,
             payment_method="pm_card_visa",
             receipt_email=receipt_email,

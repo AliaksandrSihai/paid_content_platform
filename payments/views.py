@@ -1,6 +1,6 @@
 import stripe
 from django.views import generic
-from django.views.generic import View, TemplateView
+from django.views.generic import TemplateView
 from payments.forms import PaymentConfirmForm
 from payments.models import PaymentModel
 from payments.services import confirm_payment, create_payment
@@ -45,4 +45,3 @@ class ConfirmPayment(generic.FormView):
             self.request.user.is_paid_subscribe = True
             self.request.user.save()
             return redirect("payments:success")
-

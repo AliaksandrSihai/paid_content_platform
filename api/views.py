@@ -6,6 +6,7 @@ from api.paginators import ListPaginator
 
 class AllPosts(ListAPIView):
     """Api for all posts"""
+
     serializer_class = PostSerializer
     pagination_class = ListPaginator
 
@@ -20,6 +21,7 @@ class AllPosts(ListAPIView):
 
 class Post(RetrieveAPIView):
     """Api for one post"""
+
     serializer_class = PostSerializer
 
     def get_queryset(self):

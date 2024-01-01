@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -29,7 +29,9 @@ class MyPost(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object_list"] = PostModel.objects.filter(post_owner=self.request.user).all()
+        context["object_list"] = PostModel.objects.filter(
+            post_owner=self.request.user
+        ).all()
         return context
 
 
@@ -72,6 +74,17 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("posts:all_posts")
 
 
+class LikedPosts(generic.ListView):
+    """All liked posts"""
+
+    model = PostModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["object_list"] = PostModel.objects.filter(likes=self.request.user)
+        return context
+
+
 @login_required
 def like_post(request, pk):
     post = get_object_or_404(PostModel, pk=pk)
@@ -83,5 +96,4 @@ def like_post(request, pk):
         post.likes.add(request.user)
         liked = True
 
-    return JsonResponse({'liked': liked, 'likes_count': post.likes.count()})
-
+    return JsonResponse({"liked": liked, "likes_count": post.likes.count()})
