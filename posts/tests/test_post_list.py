@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from posts.models import PostModel
 from users.models import User
 from django.urls import reverse

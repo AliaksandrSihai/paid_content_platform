@@ -23,10 +23,8 @@ class Post(RetrieveAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        if self.request.user.is_staff:
+        if self.request.user.is_authenticated:
             queryset = PostModel.objects.all()
-        # elif self.request.user.is_authenticated:
-        #     queryset = PostModel.objects.filter(pk=self.ob)
         else:
             queryset = PostModel.objects.filter(is_free=True)
 

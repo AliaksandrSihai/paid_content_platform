@@ -1,3 +1,6 @@
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
@@ -57,6 +60,8 @@ class PostDetailView(generic.DetailView):
             context["object_list"] = PostModel.objects.filter(
                 pk=self.object.pk, is_free=True
             )
+        self.object.views_count += 1
+        self.object.save()
         return context
 
 
@@ -67,16 +72,16 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("posts:all_posts")
 
 
-# class LikeView(generic.View):
-#
-#     def like_post(request, post_id):
-#     post = get_object_or_404(Post, pk=post_id)
-#
-#     if request.user in post.likes.all():
-#         post.likes.remove(request.user)
-#         liked = False
-#     else:
-#         post.likes.add(request.user)
-#         liked = True
-#     post.save()
-#     return JsonResponse({'liked': liked, 'likes_count': post.likes.count()})
+@login_required
+def like_post(request, pk):
+    post = get_object_or_404(PostModel, pk=pk)
+
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+
+    return JsonResponse({'liked': liked, 'likes_count': post.likes.count()})
+
