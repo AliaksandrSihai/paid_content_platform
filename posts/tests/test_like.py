@@ -20,13 +20,6 @@ class LikeTest(TestCase):
             title="Post", description="Test description", post_owner=self.user_1
         )
 
-    # def test_add_like(self):
-    #     self.assertEqual(self.post.likes.count(), 0)
-    #     self.client.force_login(self.user_2)
-    #     response = self.client.get(reverse('posts:like_post', args=[self.post.pk]))
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(self.post.likes.count(), 1)
-
     def test_liked_posts(self):
 
         self.client.force_login(self.user_2)
@@ -36,7 +29,7 @@ class LikeTest(TestCase):
         self.assertEqual(like, 0)
         self.assertNotIn(self.post.title, response.content.decode("utf-8"))
 
-        self.client.get(reverse('posts:like_post', args=[self.post.pk]))
+        self.client.post(reverse('api:like_post', args=[self.post.pk]))
         self.post.refresh_from_db()
         liked_post = PostModel.objects.filter(likes=self.user_2).count()
         self.assertEqual(liked_post, 1)

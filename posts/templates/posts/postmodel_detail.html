@@ -46,7 +46,7 @@
                                         var post_id = this.getAttribute('data-post-id');
                                         var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-                                        fetch(`/like_post/${post_id}`, {
+                                        fetch(`api/v1/like_post/${post_id}/`, {
                                             method: 'POST',
                                             headers: {
                                                 'Content-Type': 'application/json',

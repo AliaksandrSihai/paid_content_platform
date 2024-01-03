@@ -27,7 +27,8 @@
     }
   }
 
-  setTheme(getPreferredTheme())
+  setTheme('dark')
+
 
   const showActiveTheme = (theme, focus = false) => {
     const themeSwitcher = document.querySelector('#bd-theme')

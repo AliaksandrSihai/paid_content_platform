@@ -1,4 +1,8 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from django.shortcuts import get_object_or_404
+from rest_framework.generics import ListAPIView, RetrieveAPIView, GenericAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from api.serializers import PostSerializer
 from posts.models import PostModel
 from api.paginators import ListPaginator
@@ -31,3 +35,17 @@ class Post(RetrieveAPIView):
             queryset = PostModel.objects.filter(is_free=True)
 
         return queryset
+
+
+class AddLikeView(GenericAPIView):
+    def post(self, request, pk):
+        post = get_object_or_404(PostModel, pk=pk)
+
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+            liked = False
+        else:
+            post.likes.add(request.user)
+            liked = True
+
+        return Response({"liked": liked, "likes_count": post.likes.count()})

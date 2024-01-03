@@ -28,25 +28,24 @@
                 <ul class="nav-item ml-auto">
                     <li class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <li class="d-grid gap-3 d-md-flex justify-content-md-end">
-                            {% if user.is_authenticated %}
-                                <a id="likeBtn_{{ post.pk }}" class="likeBtn py-3 btn" data-post-id="{{ post.pk }}">
-                                {% if user in post.likes.all %}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                            {% if user.is_paid_subscribe %}
+                               <a id="likeBtn_{{ post.pk }}" class="likeBtn py-3 btn" data-post-id="{{ post.pk }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="{% if user in post.likes.all %}bi bi-heart-fill liked{% else %}bi bi-heart not-liked{% endif %}" viewBox="0 0 16 16">
+                                        {% if user in post.likes.all %}
+                                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                                        {% else %}
+                                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                        {% endif %}
                                     </svg>
-                                {% else %}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
-                                    </svg>
-                                {% endif %}
                                     <span class="likesCount" id="likesCount_{{ post.pk }}">{{ post.likes.count }}</span>
                                 </a>
                                 <script>
                                     document.getElementById('likeBtn_{{ post.pk }}').addEventListener('click', function() {
                                         var post_id = this.getAttribute('data-post-id');
                                         var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                                        var likeIcon = this.querySelector('svg');
 
-                                        fetch(`/like_post/${post_id}`, {
+                                        fetch(`/api/v1/like_post/${post_id}/`, {
                                             method: 'POST',
                                             headers: {
                                                 'Content-Type': 'application/json',
@@ -58,6 +57,8 @@
                                             var likesCountElement = document.getElementById('likesCount_' + post_id);
                                             likesCountElement.innerText = data.likes_count;
 
+                                            likeIcon.classList.toggle('liked', data.liked);
+                                            likeIcon.classList.toggle('not-liked', !data.liked);
                                         });
                                     });
                                 </script>

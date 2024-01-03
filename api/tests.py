@@ -12,6 +12,7 @@ class ApiTestPost(TestCase):
         self.user = User.objects.create(
             phone="+1234567890",
             password="123qwe456rty",
+            is_paid_subscribe=True,
         )
         self.post_1 = PostModel.objects.create(
             title="Post_1", post_owner=self.user, is_free=True
@@ -52,3 +53,10 @@ class ApiTestPost(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(self.post_1.title, response.data["title"])
         self.assertNotIn(self.post_2.title, response.data["title"])
+
+    def test_add_like(self):
+        self.assertEqual(self.post_1.likes.count(), 0)
+        self.client.force_login(self.user)
+        response = self.client.post(reverse('api:like_post', args=[self.post_1.pk]))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.post_1.likes.count(), 1)

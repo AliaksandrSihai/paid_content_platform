@@ -84,16 +84,3 @@ class LikedPosts(generic.ListView):
         context["object_list"] = PostModel.objects.filter(likes=self.request.user)
         return context
 
-
-@login_required
-def like_post(request, pk):
-    post = get_object_or_404(PostModel, pk=pk)
-
-    if request.user in post.likes.all():
-        post.likes.remove(request.user)
-        liked = False
-    else:
-        post.likes.add(request.user)
-        liked = True
-
-    return JsonResponse({"liked": liked, "likes_count": post.likes.count()})
