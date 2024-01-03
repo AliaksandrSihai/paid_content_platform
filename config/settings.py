@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
 
 # Application definition
@@ -133,8 +133,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = (BASE_DIR / "static",)
-
-
+STATIC_ROOT = "/paid_content_platform/static/"
+# STATIC_ROOT = '/var/www/html/paid_content_platform/'
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media/"
 
