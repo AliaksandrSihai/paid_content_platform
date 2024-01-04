@@ -13,6 +13,7 @@ class Command(BaseCommand):
             last_name="Admin",
             is_staff=True,
             is_superuser=True,
+            is_paid_subscribe=True
         )
         user.set_password("123qwe456asd")
         user.save()
