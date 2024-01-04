@@ -13,7 +13,7 @@ class CreditCardNumberField(forms.CharField):
         if not value.isdigit():
             raise ValidationError("Only digits are allowed in the card number.")
 
-        formatted_value = " ".join([value[i: i + 4] for i in range(0, len(value), 4)])
+        formatted_value = " ".join([value[i : i + 4] for i in range(0, len(value), 4)])
 
         return formatted_value
 

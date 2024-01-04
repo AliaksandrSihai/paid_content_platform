@@ -57,6 +57,6 @@ class ApiTestPost(TestCase):
     def test_add_like(self):
         self.assertEqual(self.post_1.likes.count(), 0)
         self.client.force_login(self.user)
-        response = self.client.post(reverse('api:like_post', args=[self.post_1.pk]))
+        response = self.client.post(reverse("api:like_post", args=[self.post_1.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(self.post_1.likes.count(), 1)

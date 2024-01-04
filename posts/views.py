@@ -1,6 +1,3 @@
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
@@ -83,4 +80,3 @@ class LikedPosts(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["object_list"] = PostModel.objects.filter(likes=self.request.user)
         return context
-
