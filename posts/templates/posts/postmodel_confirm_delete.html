@@ -1,0 +1,15 @@
+{% extends 'posts/base.html' %}
+{% block content %}
+    <div class="col-6">
+        <div class="card mb-6 box-shadow">
+            <div class="card-body">
+              <form method="post">
+                {% csrf_token %}
+                <p>Delete: {{ object.title }} ?</p>
+                <button type="submit" class=" btn btn-outline-light">Confirm deletion</button>
+                <a href="{% url 'posts:my_posts' %}" type="button" class="btn btn-outline-light">Cancel</a>
+              </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

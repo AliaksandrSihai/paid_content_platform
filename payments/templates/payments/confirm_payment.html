@@ -1,0 +1,23 @@
+{% extends 'posts/base.html'  %}
+{% block content %}
+    <style>
+        .btn.btn-outline-light{
+            background-color:#696969;
+            color: #F8F8FF;
+        }
+    </style>
+        <div class="col-5" >
+            <div class='nav-item ml-auto'>
+                <div class="card-header">
+                    <h5> To confirm the payment, please fill in the following fields: </h5>
+                </div>
+                <div class="card-body" >
+                    <form method="post" >
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light"> Confirm!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

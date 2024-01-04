@@ -1,0 +1,23 @@
+{% extends 'posts/base.html'  %}
+{% block content %}
+<style>
+    .btn.btn-outline-light{
+        background-color:#696969;
+        color: #F8F8FF;
+    }
+</style>
+            <div class="col-5" >
+                <div class='nav-item ml-auto'>
+                    <div class="card-header">
+                        <h5> User registration </h5>
+                    </div>
+                    <div class="card-body" >
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-outline-light"> Sign up!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+{% endblock content %}
