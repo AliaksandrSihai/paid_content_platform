@@ -1,8 +1,16 @@
 # paid_content_platform
-- **All dependence in requirements.txt, an example of all the environment variables in the file .env_sample, test coverage = 93 %, flake8 = 100%**
-- **To deploy the project:**
-- `git clone https://github.com/AliaksandrSihai/paid_content_platform && docker-compose  up --build `
-- to create a superuser, you need to add to the file users/management/commands/csu.py the necessary data (phone, password), and execute the command `docker-compose exec paid_content python manage.py csu`
+**All dependence in requirements.txt, an example of all the environment variables in the file .env_sample, test coverage = 93 %, flake8 = 100%**
+
+<br>**To run the project:**
+- `git clone https://github.com/AliaksandrSihai/paid_content_platform`
+- `python -m venv venv && source venv/bin/activate && pip install -r requirements.txt`
+- next need to create .env file, fill all configurations(required configurations in .env_sample) and create database then run:
+   - `python manage.py migrate && python manage.py runserver`
+
+<br>**with Docker:**
+- `git clone https://github.com/AliaksandrSihai/paid_content_platform && docker-compose up --build `
+
+<br>To create a superuser, you need to add to the file users/management/commands/csu.py the necessary data (phone, password), and run: `docker-compose exec paid_content python manage.py csu`
 
 ## Used stack:
 - **Django**
