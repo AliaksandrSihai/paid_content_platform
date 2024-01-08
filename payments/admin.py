@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from payments.models import PaymentModel
 
 
@@ -8,4 +9,4 @@ class PaymentModelAdmin(admin.ModelAdmin):
 
     list_display = ("payment_date", "payment_status", "stripe_id")
     list_filter = ("payment_date",)
-    ordering = ("payment_date",)
+    ordering = ("-payment_date",)
