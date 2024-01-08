@@ -1,8 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
+from rest_framework import status
+
 from posts.models import PostModel
 from users.models import User
-from rest_framework import status
 
 
 class TestCreateDeletePost(TestCase):

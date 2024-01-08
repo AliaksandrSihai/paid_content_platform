@@ -1,6 +1,7 @@
 from django.db import models
-import users.models
-from users.models import NULLABLE
+
+from subscription.models import Subscription
+from users.models import NULLABLE, User
 
 
 class PaymentModel(models.Model):
@@ -10,14 +11,18 @@ class PaymentModel(models.Model):
         auto_now_add=True, verbose_name="date of payment"
     )
     stripe_id = models.CharField(
-        max_length=40, verbose_name="payment id on stripe", **NULLABLE
+        max_length=128, verbose_name="payment id on stripe", **NULLABLE
     )
     payment_status = models.BooleanField(default=False, verbose_name="payment's status")
     user = models.ForeignKey(
-        to=users.models.User,
+        to=User,
         on_delete=models.DO_NOTHING,
         related_name="user_payment",
         verbose_name="user_payment",
+        **NULLABLE,
+    )
+    subscription = models.ForeignKey(
+        to=Subscription, on_delete=models.SET_NULL, null=True
     )
 
     def __str__(self):

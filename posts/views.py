@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import generic
 from django.urls import reverse_lazy
+from django.views import generic
+
 from posts.forms import PostModelForm
 from posts.models import PostModel
 
@@ -9,13 +10,18 @@ class PostListView(generic.ListView):
     """List of all posts"""
 
     model = PostModel
+    ordering = ("publish_date",)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         if self.request.user.is_authenticated and self.request.user.is_paid_subscribe:
-            context["object_list"] = PostModel.objects.all()
+            queryset = PostModel.objects.all()
         else:
-            context["object_list"] = PostModel.objects.filter(is_free=True).all()
+            queryset = PostModel.objects.filter(is_free=True)
+
+        queryset = queryset.order_by("-publish_date")
+        context["object_list"] = queryset
         return context
 
 
@@ -26,9 +32,10 @@ class MyPost(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object_list"] = PostModel.objects.filter(
-            post_owner=self.request.user
-        ).all()
+
+        queryset = PostModel.objects.filter(post_owner=self.request.user).all()
+        queryset = queryset.order_by("-publish_date")
+        context["object_list"] = queryset
         return context
 
 
@@ -78,5 +85,8 @@ class LikedPosts(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["object_list"] = PostModel.objects.filter(likes=self.request.user)
+
+        queryset = PostModel.objects.filter(likes=self.request.user)
+        queryset = queryset.order_by("-publish_date")
+        context["object_list"] = queryset
         return context

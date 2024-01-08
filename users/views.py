@@ -1,13 +1,22 @@
 import secrets
 import string
+
 from django.contrib.auth.decorators import login_required
-from django.views import generic
-from django.shortcuts import redirect
-from users.models import User
-from users.forms import UserForm, ProfileForm
-from django.urls import reverse_lazy, reverse
+from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+
 from config.settings import EMAIL_HOST_USER
+from users.forms import ProfileForm, UserForm, UserLogInForm
+from users.models import User
+
+
+class UserLogIn(LoginView):
+    """Add stylized form"""
+
+    form_class = UserLogInForm
 
 
 class UserRegisterView(generic.CreateView):

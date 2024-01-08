@@ -1,16 +1,22 @@
 # paid_content_platform
-**All dependence in requirements.txt, an example of all the environment variables in the file .env_sample, test coverage = 93 %, flake8 = 100%**
+**All dependence in requirements.txt, an example of all the environment variables in the file .env_sample, test coverage = 94 %, flake8 = 100%**.
+<br>**Before launching, you must register in stripe.com and add your api_secret key to the .env file ( necessary to create).**
 
 <br>**To run the project:**
 - `git clone https://github.com/AliaksandrSihai/paid_content_platform`
-- `python -m venv venv && source venv/bin/activate && pip install -r requirements.txt`
-- next need to create .env file, fill all configurations(required configurations in .env_sample) and create database then run:
-   - `python manage.py migrate && python manage.py runserver`
-
-<br>**with Docker:**
-- `git clone https://github.com/AliaksandrSihai/paid_content_platform && docker-compose up --build `
-
-<br>To create a superuser, you need to add to the file users/management/commands/csu.py the necessary data (phone, password), and run: `docker-compose exec paid_content python manage.py csu`
+- next need to create a .env file, add your api_secret key to this file, fill in all other configurations (required configurations in .env_sample) and create a database.
+- go to https://stripe.com/docs/stripe-cli#install install(with your operating system) and log in to the CLI, after logging in, add your webhook signing secret to the .env file(STRIPE_WEBHOOK_KEY=your webhook signing secret).
+  
+  - `python -m venv venv && source venv/bin/activate && pip install -r requirements.txt`
+  - `python manage.py migrate `
+  - create a superuser, you need to add to the file users/management/commands/csu.py the necessary data (phone, password), and run: `python manage.py csu`
+  - ` python manage.py runserver`
+  
+  <br>**with Docker:**
+  - `git clone https://github.com/AliaksandrSihai/paid_content_platform && docker-compose up --build `
+  - create a superuser, you need to add to the file users/management/commands/csu.py the necessary data (phone, password), and run: `docker-compose exec paid_content python manage.py csu`.
+  
+- log in to the admin panel and create all the necessary subscriptions(leave the stripe_price_id field empty).
 
 ## Used stack:
 - **Django**
