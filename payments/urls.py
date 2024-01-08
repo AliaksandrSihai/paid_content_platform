@@ -1,6 +1,7 @@
-from payments.apps import PaymentsConfig
 from django.urls import path
-from payments.views import ConfirmPayment, CancelPayment, SuccessPayment
+
+from payments.apps import PaymentsConfig
+from payments.views import CancelPayment, ConfirmPayment, SuccessPayment
 
 app_name = PaymentsConfig.name
 

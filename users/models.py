@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.core.validators import RegexValidator
-from subscription.models import Subscription
-
+from django.db import models
 
 NULLABLE = {"null": True, "blank": True}
 
@@ -22,13 +20,6 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name="email", **NULLABLE)
     city = models.CharField(max_length=135, verbose_name="city", **NULLABLE)
     avatar = models.ImageField(upload_to="users/", verbose_name="avatar", **NULLABLE)
-    subscription = models.ForeignKey(
-        to=Subscription,
-        on_delete=models.DO_NOTHING,
-        **NULLABLE,
-        related_name="subscribe",
-        verbose_name="subscription"
-    )
     is_paid_subscribe = models.BooleanField(
         default=False, verbose_name=" paid subscription "
     )

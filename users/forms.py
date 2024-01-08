@@ -1,7 +1,15 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
+                                       UserCreationForm)
+
 from posts.forms import StyleFormMixin
 from users.models import User
+
+
+class UserLogInForm(StyleFormMixin, AuthenticationForm):
+    """Stylization AuthenticationForm form"""
+
+    pass
 
 
 class UserForm(StyleFormMixin, UserCreationForm):
@@ -9,7 +17,7 @@ class UserForm(StyleFormMixin, UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("phone", "email", "password1", "password2", "subscription")
+        fields = ("phone", "email", "password1", "password2")
 
 
 class ProfileForm(StyleFormMixin, UserChangeForm):

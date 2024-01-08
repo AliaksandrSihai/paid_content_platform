@@ -1,6 +1,7 @@
-from api.apps import ApiConfig
 from django.urls import path
-from api.views import AllPosts, Post, AddLikeView
+
+from api.apps import ApiConfig
+from api.views import AddLikeView, AllPosts, Post
 
 app_name = ApiConfig.name
 

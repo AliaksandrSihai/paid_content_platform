@@ -1,5 +1,6 @@
-from posts.models import PostModel
 from django import forms
+
+from posts.models import PostModel
 
 
 class StyleFormMixin:

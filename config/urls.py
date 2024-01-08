@@ -15,10 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
+from django.urls import include, path
 from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+from payments.views import stripe_webhook_view
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -40,6 +42,7 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("payments/", include("payments.urls", namespace="payments")),
     path("api/", include("api.urls", namespace="api")),
+    path("webhook/stripe/", stripe_webhook_view, name="stripe_webhook"),
     path(
         "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
     ),
